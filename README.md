@@ -99,4 +99,10 @@ Cloud land saves atomically update the private record and a public projection in
 npx firebase login --reauth
 npx firebase deploy --only firestore:rules,firestore:indexes --project qarm-3b02c
 ```
-# explor-qarm
+## خريطة المشرفين
+
+صفحة `/admin/supervisors` متاحة للمدير فقط، وتقرأ ملفات المستخدمين من Firestore مباشرة. تُظهر على خريطة المناطق الإدارية الـ١٣ عدد المشرفين النشطين ذوي صلاحيات المناطق والمحافظات المكتملة؛ يُحسب المشرف في كل منطقة كُلّف بها، لذلك قد يزيد مجموع التكليفات عن عدد الأشخاص. اختيار منطقة من الخريطة أو القائمة يعرض المشرفين فيها وعدد المحافظات المسندة لكل منهم. حدود الخريطة مبسطة لأغراض العرض وليست مرجعًا مساحيًا رسميًا، ومصدرها [geoBoundaries SAU ADM1](https://www.geoboundaries.org/api/current/gbOpen/SAU/ADM1/) المبني على بيانات OpenStreetMap المرخّصة ODbL.
+
+## النطاق المنشور ومفتاح Firebase
+
+عند نشر التطبيق على نطاق جديد، أضف النطاق إلى قيود المواقع الإلكترونية لمفتاح Firebase المستخدم في `NEXT_PUBLIC_FIREBASE_API_KEY` ضمن Google Cloud Console ← APIs & Services ← Credentials. للنطاق الحالي أضف `https://explor-qarm-suzwp.ondigitalocean.app` و`https://explor-qarm-suzwp.ondigitalocean.app/*`، مع إبقاء قيود localhost الموجودة. مفتاح Google Maps منفصل ولا يعالج فشل Firebase Authentication. رسالة `Requests from referer ... are blocked` تعني رفض النطاق من مفتاح Firebase قبل التحقق من البريد أو كلمة المرور.
