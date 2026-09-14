@@ -1,0 +1,118 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function profile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function isAdmin() { return request.auth != null && profile().active == true && profile().role == 'admin'; }
+    function isStaff() { return request.auth != null && profile().active == true && profile().role in ['admin','editor','regional_supervisor']; }
+    function inScope(region, governorate) {
+      return isStaff() && profile().role == 'regional_supervisor'
+        && region in profile().regions
+        && governorate in profile().governorates.get(region, []);
+    }
+    function manages(owner, region, governorate) {
+      return isStaff() && ((profile().role != 'regional_supervisor' && request.auth.uid == owner) || inScope(region, governorate));
+    }
+    function validGovernorates(data, region, allowed) {
+      return !(region in data.regions) || (data.governorates[region] is list
+        && data.governorates[region].size() > 0
+        && data.governorates[region].size() <= allowed.size()
+        && data.governorates[region].toSet().size() == data.governorates[region].size()
+        && data.governorates[region].hasOnly(allowed));
+    }
+    function validRegions(data) {
+      return (data.role != 'regional_supervisor'
+        && (!('regions' in data) || (data.regions is list && data.regions.size() == 0))
+        && (!('governorates' in data) || (data.governorates is map && data.governorates.size() == 0)))
+        || (data.role == 'regional_supervisor'
+        && data.regions is list && data.regions.size() <= 13
+        && data.regions.toSet().size() == data.regions.size()
+        && data.regions.hasOnly(['الرياض','مكة المكرمة','المدينة المنورة','القصيم','الشرقية','عسير','تبوك','حائل','الحدود الشمالية','جازان','نجران','الباحة','الجوف'])
+        && data.governorates is map
+        && data.regions.size() > 0
+          && data.governorates.keys().hasOnly(data.regions)
+          && data.regions.hasOnly(data.governorates.keys())
+          && validGovernorates(data, "الرياض", ["الرياض", "الدرعية", "الخرج", "الدوادمي", "المجمعة", "القويعية", "وادي الدواسر", "الأفلاج", "الزلفي", "شقراء", "حوطة بني تميم", "عفيف", "السليل", "ضرماء", "المزاحمية", "رماح", "ثادق", "حريملاء", "الحريق", "الغاط", "مرات", "الدلم", "الرين"])
+          && validGovernorates(data, "مكة المكرمة", ["مكة المكرمة", "جدة", "الطائف", "القنفذة", "الليث", "رابغ", "الجموم", "خليص", "الكامل", "الخرمة", "رنية", "تربة", "ميسان", "المويه", "أضم", "العرضيات", "بحرة"])
+          && validGovernorates(data, "المدينة المنورة", ["المدينة المنورة", "ينبع", "العلا", "المهد", "بدر", "خيبر", "الحناكية", "العيص", "وادي الفرع"])
+          && validGovernorates(data, "القصيم", ["بريدة", "عنيزة", "الرس", "المذنب", "البكيرية", "البدائع", "الأسياح", "النبهانية", "عيون الجواء", "رياض الخبراء", "الشماسية", "عقلة الصقور", "ضرية", "أبانات"])
+          && validGovernorates(data, "الشرقية", ["الدمام", "الأحساء", "حفر الباطن", "الجبيل", "القطيف", "الخبر", "الخفجي", "رأس تنورة", "بقيق", "النعيرية", "قرية العليا", "العديد", "البيضاء"])
+          && validGovernorates(data, "عسير", ["أبها", "خميس مشيط", "بيشة", "النماص", "محايل", "سراة عبيدة", "تثليث", "رجال ألمع", "أحد رفيدة", "ظهران الجنوب", "بلقرن", "المجاردة", "تنومة", "طريب", "بارق", "البرك", "الحرجة", "الأمواه", "الفرشة"])
+          && validGovernorates(data, "تبوك", ["تبوك", "الوجه", "ضباء", "تيماء", "أملج", "حقل", "البدع"])
+          && validGovernorates(data, "حائل", ["حائل", "بقعاء", "الغزالة", "الشنان", "السليمي", "الحائط", "سميراء", "الشملي", "موقق"])
+          && validGovernorates(data, "الحدود الشمالية", ["عرعر", "رفحاء", "طريف", "العويقيلة"])
+          && validGovernorates(data, "جازان", ["جازان", "صبياء", "أبو عريش", "صامطة", "الحرث", "ضمد", "الريث", "بيش", "جزر فرسان", "الدائر", "أحد المسارحة", "العيدابي", "العارضة", "الدرب", "هروب", "فيفاء", "الطوال"])
+          && validGovernorates(data, "نجران", ["نجران", "شرورة", "حبونا", "بدر الجنوب", "يدمة", "ثار", "خباش"])
+          && validGovernorates(data, "الباحة", ["الباحة", "بالجرشي", "المندق", "المخواة", "العقيق", "قلوه", "القرى", "بني حسن", "غامد الزناد", "الحجرة"])
+          && validGovernorates(data, "الجوف", ["سكاكا", "القريات", "دومة الجندل", "طبرجل", "صوير"]));
+    }
+    match /{path=**}/lands/{landId} {
+      allow read: if inScope(resource.data.get('region',''), resource.data.get('governorate',''));
+    }
+    match /users/{userId} {
+      allow get: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly(['name','email','role','active','regions','governorates'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 100
+        && request.resource.data.email is string && request.resource.data.email.size() <= 254
+        && request.resource.data.role in ['admin','editor','regional_supervisor']
+        && validRegions(request.resource.data)
+        && request.resource.data.active is bool
+        && (userId != request.auth.uid || (request.resource.data.role == 'admin' && request.resource.data.active == true));
+    }
+    match /publicLands/{landId} {
+      allow read: if true;
+      allow create, update: if isStaff()
+        && manages(request.resource.data.adminUid, request.resource.data.region, request.resource.data.governorate)
+        && (!exists(/databases/$(database)/documents/publicLands/$(landId)) || (request.resource.data.adminUid == resource.data.adminUid && manages(resource.data.adminUid,resource.data.region,resource.data.get('governorate',''))))
+        && request.resource.data.keys().hasOnly(['id','title','location','region','governorate','district','area','price','status','path','adminUid'])
+        && request.resource.data.id == landId
+        && request.resource.data.title is string
+        && request.resource.data.area is number && request.resource.data.area > 0
+        && request.resource.data.price is number && request.resource.data.price > 0
+        && request.resource.data.status in ['متاحة','متاحة للبيع','متاحة للإيجار','محجوزة'];
+      allow delete: if isStaff() && (!exists(/databases/$(database)/documents/publicLands/$(landId)) || manages(resource.data.adminUid,resource.data.region,resource.data.get('governorate','')));
+    }
+    match /contactRequests/{requestId} {
+      allow create: if request.resource.data.keys().hasOnly(['id','landId','landTitle','name','phone','message','createdAt','status','adminUid','region','governorate'])
+        && request.resource.data.id == requestId
+        && request.resource.data.landId is string
+        && exists(/databases/$(database)/documents/publicLands/$(request.resource.data.landId))
+        && request.resource.data.adminUid == get(/databases/$(database)/documents/publicLands/$(request.resource.data.landId)).data.adminUid
+        && request.resource.data.region == get(/databases/$(database)/documents/publicLands/$(request.resource.data.landId)).data.region
+        && request.resource.data.governorate == get(/databases/$(database)/documents/publicLands/$(request.resource.data.landId)).data.governorate
+        && request.resource.data.landTitle == get(/databases/$(database)/documents/publicLands/$(request.resource.data.landId)).data.title
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 100
+        && request.resource.data.phone is string && request.resource.data.phone.size() >= 7 && request.resource.data.phone.size() <= 25
+        && request.resource.data.message is string && request.resource.data.message.size() <= 1000
+        && request.resource.data.createdAt is string
+        && request.resource.data.status == 'جديد';
+      allow read: if isStaff() && ((profile().role != 'regional_supervisor' && resource.data.adminUid == request.auth.uid) || inScope(resource.data.get('region',''), resource.data.get('governorate','')));
+      allow update: if isStaff() && ((profile().role != 'regional_supervisor' && resource.data.adminUid == request.auth.uid) || inScope(resource.data.get('region',''), resource.data.get('governorate','')))
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status in ['جديد','تم التواصل'];
+    }
+    match /users/{userId}/lands/{landId} {
+      allow read, delete: if manages(userId, resource.data.get('region',''), resource.data.get('governorate',''));
+      allow create, update: if manages(userId, request.resource.data.get('region',''), request.resource.data.get('governorate',''))
+        && (!exists(/databases/$(database)/documents/users/$(userId)/lands/$(landId)) || manages(userId,resource.data.get('region',''),resource.data.get('governorate','')))
+        && request.resource.data.keys().hasOnly(['id','title','owner','phone','location','region','governorate','district','referredBy','referredByPhone','area','price','status','notes','path','createdAt'])
+        && request.resource.data.id == landId
+        && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 120
+        && request.resource.data.owner is string && request.resource.data.owner.size() > 0 && request.resource.data.owner.size() <= 100
+        && request.resource.data.phone is string && request.resource.data.phone.size() > 0 && request.resource.data.phone.size() <= 30
+        && request.resource.data.location is string && request.resource.data.location.size() <= 200
+        && (!('region' in request.resource.data) || (request.resource.data.region is string && request.resource.data.region.size() <= 120))
+        && (!('governorate' in request.resource.data) || (request.resource.data.governorate is string && request.resource.data.governorate.size() <= 120))
+        && (!('district' in request.resource.data) || (request.resource.data.district is string && request.resource.data.district.size() <= 120))
+        && (!('referredBy' in request.resource.data) || (request.resource.data.referredBy is string && request.resource.data.referredBy.size() <= 150))
+        && (!('referredByPhone' in request.resource.data) || (request.resource.data.referredByPhone is string && request.resource.data.referredByPhone.size() <= 30))
+        && request.resource.data.notes is string && request.resource.data.notes.size() <= 2000
+        && request.resource.data.createdAt is string
+        && request.resource.data.area is number && request.resource.data.area > 0
+        && request.resource.data.price is number && request.resource.data.price > 0
+        && request.resource.data.status in ['متاحة','متاحة للبيع','متاحة للإيجار','محجوزة','مباعة']
+        && request.resource.data.path is list && request.resource.data.path.size() >= 3 && request.resource.data.path.size() <= 100;
+    }
+  }
+}

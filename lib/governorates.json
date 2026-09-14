@@ -1,0 +1,798 @@
+{
+  "الرياض": [
+    {
+      "id": "0100",
+      "name": "الرياض",
+      "capital": true
+    },
+    {
+      "id": "0101",
+      "name": "الدرعية",
+      "capital": false
+    },
+    {
+      "id": "0102",
+      "name": "الخرج",
+      "capital": false
+    },
+    {
+      "id": "0103",
+      "name": "الدوادمي",
+      "capital": false
+    },
+    {
+      "id": "0104",
+      "name": "المجمعة",
+      "capital": false
+    },
+    {
+      "id": "0105",
+      "name": "القويعية",
+      "capital": false
+    },
+    {
+      "id": "0106",
+      "name": "وادي الدواسر",
+      "capital": false
+    },
+    {
+      "id": "0107",
+      "name": "الأفلاج",
+      "capital": false
+    },
+    {
+      "id": "0108",
+      "name": "الزلفي",
+      "capital": false
+    },
+    {
+      "id": "0109",
+      "name": "شقراء",
+      "capital": false
+    },
+    {
+      "id": "0110",
+      "name": "حوطة بني تميم",
+      "capital": false
+    },
+    {
+      "id": "0111",
+      "name": "عفيف",
+      "capital": false
+    },
+    {
+      "id": "0112",
+      "name": "السليل",
+      "capital": false
+    },
+    {
+      "id": "0113",
+      "name": "ضرماء",
+      "capital": false
+    },
+    {
+      "id": "0114",
+      "name": "المزاحمية",
+      "capital": false
+    },
+    {
+      "id": "0115",
+      "name": "رماح",
+      "capital": false
+    },
+    {
+      "id": "0116",
+      "name": "ثادق",
+      "capital": false
+    },
+    {
+      "id": "0117",
+      "name": "حريملاء",
+      "capital": false
+    },
+    {
+      "id": "0118",
+      "name": "الحريق",
+      "capital": false
+    },
+    {
+      "id": "0119",
+      "name": "الغاط",
+      "capital": false
+    },
+    {
+      "id": "0120",
+      "name": "مرات",
+      "capital": false
+    },
+    {
+      "id": "0121",
+      "name": "الدلم",
+      "capital": false
+    },
+    {
+      "id": "0122",
+      "name": "الرين",
+      "capital": false
+    }
+  ],
+  "مكة المكرمة": [
+    {
+      "id": "0123",
+      "name": "مكة المكرمة",
+      "capital": true
+    },
+    {
+      "id": "0124",
+      "name": "جدة",
+      "capital": false
+    },
+    {
+      "id": "0125",
+      "name": "الطائف",
+      "capital": false
+    },
+    {
+      "id": "0126",
+      "name": "القنفذة",
+      "capital": false
+    },
+    {
+      "id": "0127",
+      "name": "الليث",
+      "capital": false
+    },
+    {
+      "id": "0128",
+      "name": "رابغ",
+      "capital": false
+    },
+    {
+      "id": "0129",
+      "name": "الجموم",
+      "capital": false
+    },
+    {
+      "id": "0130",
+      "name": "خليص",
+      "capital": false
+    },
+    {
+      "id": "0131",
+      "name": "الكامل",
+      "capital": false
+    },
+    {
+      "id": "0132",
+      "name": "الخرمة",
+      "capital": false
+    },
+    {
+      "id": "0133",
+      "name": "رنية",
+      "capital": false
+    },
+    {
+      "id": "0134",
+      "name": "تربة",
+      "capital": false
+    },
+    {
+      "id": "0135",
+      "name": "ميسان",
+      "capital": false
+    },
+    {
+      "id": "0136",
+      "name": "المويه",
+      "capital": false
+    },
+    {
+      "id": "0137",
+      "name": "أضم",
+      "capital": false
+    },
+    {
+      "id": "0138",
+      "name": "العرضيات",
+      "capital": false
+    },
+    {
+      "id": "0139",
+      "name": "بحرة",
+      "capital": false
+    }
+  ],
+  "المدينة المنورة": [
+    {
+      "id": "0140",
+      "name": "المدينة المنورة",
+      "capital": true
+    },
+    {
+      "id": "0141",
+      "name": "ينبع",
+      "capital": false
+    },
+    {
+      "id": "0142",
+      "name": "العلا",
+      "capital": false
+    },
+    {
+      "id": "0143",
+      "name": "المهد",
+      "capital": false
+    },
+    {
+      "id": "0144",
+      "name": "بدر",
+      "capital": false
+    },
+    {
+      "id": "0145",
+      "name": "خيبر",
+      "capital": false
+    },
+    {
+      "id": "0146",
+      "name": "الحناكية",
+      "capital": false
+    },
+    {
+      "id": "0147",
+      "name": "العيص",
+      "capital": false
+    },
+    {
+      "id": "0148",
+      "name": "وادي الفرع",
+      "capital": false
+    }
+  ],
+  "القصيم": [
+    {
+      "id": "0149",
+      "name": "بريدة",
+      "capital": true
+    },
+    {
+      "id": "0150",
+      "name": "عنيزة",
+      "capital": false
+    },
+    {
+      "id": "0151",
+      "name": "الرس",
+      "capital": false
+    },
+    {
+      "id": "0152",
+      "name": "المذنب",
+      "capital": false
+    },
+    {
+      "id": "0153",
+      "name": "البكيرية",
+      "capital": false
+    },
+    {
+      "id": "0154",
+      "name": "البدائع",
+      "capital": false
+    },
+    {
+      "id": "0155",
+      "name": "الأسياح",
+      "capital": false
+    },
+    {
+      "id": "0156",
+      "name": "النبهانية",
+      "capital": false
+    },
+    {
+      "id": "0157",
+      "name": "عيون الجواء",
+      "capital": false
+    },
+    {
+      "id": "0158",
+      "name": "رياض الخبراء",
+      "capital": false
+    },
+    {
+      "id": "0159",
+      "name": "الشماسية",
+      "capital": false
+    },
+    {
+      "id": "0160",
+      "name": "عقلة الصقور",
+      "capital": false
+    },
+    {
+      "id": "0161",
+      "name": "ضرية",
+      "capital": false
+    },
+    {
+      "id": "0251",
+      "name": "أبانات",
+      "capital": false
+    }
+  ],
+  "الشرقية": [
+    {
+      "id": "0162",
+      "name": "الدمام",
+      "capital": true
+    },
+    {
+      "id": "0163",
+      "name": "الأحساء",
+      "capital": false
+    },
+    {
+      "id": "0164",
+      "name": "حفر الباطن",
+      "capital": false
+    },
+    {
+      "id": "0165",
+      "name": "الجبيل",
+      "capital": false
+    },
+    {
+      "id": "0166",
+      "name": "القطيف",
+      "capital": false
+    },
+    {
+      "id": "0167",
+      "name": "الخبر",
+      "capital": false
+    },
+    {
+      "id": "0168",
+      "name": "الخفجي",
+      "capital": false
+    },
+    {
+      "id": "0169",
+      "name": "رأس تنورة",
+      "capital": false
+    },
+    {
+      "id": "0170",
+      "name": "بقيق",
+      "capital": false
+    },
+    {
+      "id": "0171",
+      "name": "النعيرية",
+      "capital": false
+    },
+    {
+      "id": "0172",
+      "name": "قرية العليا",
+      "capital": false
+    },
+    {
+      "id": "0173",
+      "name": "العديد",
+      "capital": false
+    },
+    {
+      "id": "0174",
+      "name": "البيضاء",
+      "capital": false
+    }
+  ],
+  "عسير": [
+    {
+      "id": "0175",
+      "name": "أبها",
+      "capital": true
+    },
+    {
+      "id": "0176",
+      "name": "خميس مشيط",
+      "capital": false
+    },
+    {
+      "id": "0177",
+      "name": "بيشة",
+      "capital": false
+    },
+    {
+      "id": "0178",
+      "name": "النماص",
+      "capital": false
+    },
+    {
+      "id": "0179",
+      "name": "محايل",
+      "capital": false
+    },
+    {
+      "id": "0180",
+      "name": "سراة عبيدة",
+      "capital": false
+    },
+    {
+      "id": "0181",
+      "name": "تثليث",
+      "capital": false
+    },
+    {
+      "id": "0182",
+      "name": "رجال ألمع",
+      "capital": false
+    },
+    {
+      "id": "0183",
+      "name": "أحد رفيدة",
+      "capital": false
+    },
+    {
+      "id": "0184",
+      "name": "ظهران الجنوب",
+      "capital": false
+    },
+    {
+      "id": "0185",
+      "name": "بلقرن",
+      "capital": false
+    },
+    {
+      "id": "0186",
+      "name": "المجاردة",
+      "capital": false
+    },
+    {
+      "id": "0187",
+      "name": "تنومة",
+      "capital": false
+    },
+    {
+      "id": "0188",
+      "name": "طريب",
+      "capital": false
+    },
+    {
+      "id": "0189",
+      "name": "بارق",
+      "capital": false
+    },
+    {
+      "id": "0190",
+      "name": "البرك",
+      "capital": false
+    },
+    {
+      "id": "0191",
+      "name": "الحرجة",
+      "capital": false
+    },
+    {
+      "id": "0192",
+      "name": "الأمواه",
+      "capital": false
+    },
+    {
+      "id": "0253",
+      "name": "الفرشة",
+      "capital": false
+    }
+  ],
+  "تبوك": [
+    {
+      "id": "0193",
+      "name": "تبوك",
+      "capital": true
+    },
+    {
+      "id": "0194",
+      "name": "الوجه",
+      "capital": false
+    },
+    {
+      "id": "0195",
+      "name": "ضباء",
+      "capital": false
+    },
+    {
+      "id": "0196",
+      "name": "تيماء",
+      "capital": false
+    },
+    {
+      "id": "0197",
+      "name": "أملج",
+      "capital": false
+    },
+    {
+      "id": "0198",
+      "name": "حقل",
+      "capital": false
+    },
+    {
+      "id": "0199",
+      "name": "البدع",
+      "capital": false
+    }
+  ],
+  "حائل": [
+    {
+      "id": "0200",
+      "name": "حائل",
+      "capital": true
+    },
+    {
+      "id": "0201",
+      "name": "بقعاء",
+      "capital": false
+    },
+    {
+      "id": "0202",
+      "name": "الغزالة",
+      "capital": false
+    },
+    {
+      "id": "0203",
+      "name": "الشنان",
+      "capital": false
+    },
+    {
+      "id": "0204",
+      "name": "السليمي",
+      "capital": false
+    },
+    {
+      "id": "0205",
+      "name": "الحائط",
+      "capital": false
+    },
+    {
+      "id": "0206",
+      "name": "سميراء",
+      "capital": false
+    },
+    {
+      "id": "0207",
+      "name": "الشملي",
+      "capital": false
+    },
+    {
+      "id": "0208",
+      "name": "موقق",
+      "capital": false
+    }
+  ],
+  "الحدود الشمالية": [
+    {
+      "id": "0209",
+      "name": "عرعر",
+      "capital": true
+    },
+    {
+      "id": "0210",
+      "name": "رفحاء",
+      "capital": false
+    },
+    {
+      "id": "0211",
+      "name": "طريف",
+      "capital": false
+    },
+    {
+      "id": "0212",
+      "name": "العويقيلة",
+      "capital": false
+    }
+  ],
+  "جازان": [
+    {
+      "id": "0213",
+      "name": "جازان",
+      "capital": true
+    },
+    {
+      "id": "0214",
+      "name": "صبياء",
+      "capital": false
+    },
+    {
+      "id": "0215",
+      "name": "أبو عريش",
+      "capital": false
+    },
+    {
+      "id": "0216",
+      "name": "صامطة",
+      "capital": false
+    },
+    {
+      "id": "0217",
+      "name": "الحرث",
+      "capital": false
+    },
+    {
+      "id": "0218",
+      "name": "ضمد",
+      "capital": false
+    },
+    {
+      "id": "0219",
+      "name": "الريث",
+      "capital": false
+    },
+    {
+      "id": "0220",
+      "name": "بيش",
+      "capital": false
+    },
+    {
+      "id": "0221",
+      "name": "جزر فرسان",
+      "capital": false
+    },
+    {
+      "id": "0222",
+      "name": "الدائر",
+      "capital": false
+    },
+    {
+      "id": "0223",
+      "name": "أحد المسارحة",
+      "capital": false
+    },
+    {
+      "id": "0224",
+      "name": "العيدابي",
+      "capital": false
+    },
+    {
+      "id": "0225",
+      "name": "العارضة",
+      "capital": false
+    },
+    {
+      "id": "0226",
+      "name": "الدرب",
+      "capital": false
+    },
+    {
+      "id": "0227",
+      "name": "هروب",
+      "capital": false
+    },
+    {
+      "id": "0228",
+      "name": "فيفاء",
+      "capital": false
+    },
+    {
+      "id": "0229",
+      "name": "الطوال",
+      "capital": false
+    }
+  ],
+  "نجران": [
+    {
+      "id": "0230",
+      "name": "نجران",
+      "capital": true
+    },
+    {
+      "id": "0231",
+      "name": "شرورة",
+      "capital": false
+    },
+    {
+      "id": "0232",
+      "name": "حبونا",
+      "capital": false
+    },
+    {
+      "id": "0233",
+      "name": "بدر الجنوب",
+      "capital": false
+    },
+    {
+      "id": "0234",
+      "name": "يدمة",
+      "capital": false
+    },
+    {
+      "id": "0235",
+      "name": "ثار",
+      "capital": false
+    },
+    {
+      "id": "0236",
+      "name": "خباش",
+      "capital": false
+    }
+  ],
+  "الباحة": [
+    {
+      "id": "0237",
+      "name": "الباحة",
+      "capital": true
+    },
+    {
+      "id": "0238",
+      "name": "بالجرشي",
+      "capital": false
+    },
+    {
+      "id": "0239",
+      "name": "المندق",
+      "capital": false
+    },
+    {
+      "id": "0240",
+      "name": "المخواة",
+      "capital": false
+    },
+    {
+      "id": "0241",
+      "name": "العقيق",
+      "capital": false
+    },
+    {
+      "id": "0242",
+      "name": "قلوه",
+      "capital": false
+    },
+    {
+      "id": "0243",
+      "name": "القرى",
+      "capital": false
+    },
+    {
+      "id": "0244",
+      "name": "بني حسن",
+      "capital": false
+    },
+    {
+      "id": "0245",
+      "name": "غامد الزناد",
+      "capital": false
+    },
+    {
+      "id": "0246",
+      "name": "الحجرة",
+      "capital": false
+    }
+  ],
+  "الجوف": [
+    {
+      "id": "0247",
+      "name": "سكاكا",
+      "capital": true
+    },
+    {
+      "id": "0248",
+      "name": "القريات",
+      "capital": false
+    },
+    {
+      "id": "0249",
+      "name": "دومة الجندل",
+      "capital": false
+    },
+    {
+      "id": "0250",
+      "name": "طبرجل",
+      "capital": false
+    },
+    {
+      "id": "0252",
+      "name": "صوير",
+      "capital": false
+    }
+  ]
+}
