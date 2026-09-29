@@ -1,15 +1,27 @@
 'use client';
 import {useEffect,useState,useCallback} from 'react';
 import Link from 'next/link';
-import {collection,onSnapshot,doc,setDoc} from 'firebase/firestore';
+import {collection,onSnapshot,getDocsFromServer,doc,setDoc,type QuerySnapshot,type DocumentData} from 'firebase/firestore';
 import {ArrowUpLeft,MapPin,Search,LandPlot,ArrowDown,Phone,X,Check,Map as MapIcon,LayoutGrid} from 'lucide-react';
 import LandMap from './land-map';
 import {db} from '@/lib/firebase';
 import {Land,format,samples,displayLandStatus,landStatusClass} from '@/lib/lands';
 import {PublicLand,ContactRequest,publicLand,PUBLIC_KEY,REQUESTS_KEY,cloudMode} from '@/lib/public-lands';
 export default function PublicMarketplace(){
- const [lands,setLands]=useState<PublicLand[]>([]),[loading,setLoading]=useState(true),[error,setError]=useState(''),[query,setQuery]=useState(''),[region,setRegion]=useState(''),[listingStatus,setListingStatus]=useState('الكل'),[sort,setSort]=useState('default'),[mapView,setMapView]=useState(false),[selected,setSelected]=useState<string|null>(null),[contact,setContact]=useState<PublicLand|null>(null),[name,setName]=useState(''),[phone,setPhone]=useState(''),[message,setMessage]=useState(''),[sending,setSending]=useState(false),[success,setSuccess]=useState(false),[formError,setFormError]=useState('');
- useEffect(()=>{if(cloudMode){if(!db){setError('تعذر الاتصال بخدمة الأراضي.');setLoading(false);return;}return onSnapshot(collection(db,'publicLands'),s=>{setLands(s.docs.map(d=>({...d.data(),id:d.id}) as PublicLand));setLoading(false);},()=>{setError('تعذر تحميل الأراضي. يرجى المحاولة لاحقًا.');setLoading(false);});}const read=()=>{try{const saved=localStorage.getItem(PUBLIC_KEY);setLands(saved?JSON.parse(saved):samples.map(l=>publicLand(l)));}catch{setError('تعذر تحميل الأراضي المحلية.');}setLoading(false);};read();window.addEventListener('storage',read);window.addEventListener('qarm-public-updated',read);return()=>{window.removeEventListener('storage',read);window.removeEventListener('qarm-public-updated',read);};},[]);
+ const [lands,setLands]=useState<PublicLand[]>([]),[loading,setLoading]=useState(true),[error,setError]=useState(''),[query,setQuery]=useState(''),[region,setRegion]=useState(''),[listingStatus,setListingStatus]=useState('الكل'),[sort,setSort]=useState('default'),[mapView,setMapView]=useState(true),[selected,setSelected]=useState<string|null>(null),[contact,setContact]=useState<PublicLand|null>(null),[name,setName]=useState(''),[phone,setPhone]=useState(''),[message,setMessage]=useState(''),[sending,setSending]=useState(false),[success,setSuccess]=useState(false),[formError,setFormError]=useState('');
+ useEffect(()=>{
+  if(cloudMode){
+   if(!db){setError('تعذر الاتصال بخدمة الأراضي.');setLoading(false);return;}
+   let active=true,received=false;const source=collection(db,'publicLands');
+   const apply=(snapshot:QuerySnapshot<DocumentData>)=>{if(!active)return;received=true;setLands(snapshot.docs.map(d=>({...d.data(),id:d.id}) as PublicLand));setError('');setLoading(false);};
+   const fail=()=>{if(!active)return;setError('تعذر تحميل الأراضي. يرجى المحاولة لاحقًا.');setLoading(false);};
+   const unsubscribe=onSnapshot(source,apply,fail);
+   getDocsFromServer(source).then(apply).catch(fail);
+   const timeout=window.setTimeout(()=>{if(active&&!received)fail();},10000);
+   return()=>{active=false;window.clearTimeout(timeout);unsubscribe();};
+  }
+  const read=()=>{try{const saved=localStorage.getItem(PUBLIC_KEY);setLands(saved?JSON.parse(saved):samples.map(l=>publicLand(l)));}catch{setError('تعذر تحميل الأراضي المحلية.');}setLoading(false);};read();window.addEventListener('storage',read);window.addEventListener('qarm-public-updated',read);return()=>{window.removeEventListener('storage',read);window.removeEventListener('qarm-public-updated',read);};
+ },[]);
  const filtered=lands.filter(l=>l.status!=='مباعة'&&(listingStatus==='الكل'||displayLandStatus(l.status)===listingStatus)&&(!region||l.region===region)&&[l.title,l.propertyType,l.location,l.region,l.governorate,l.district].some(v=>v?.includes(query))).sort((a,b)=>sort==='price-low'?a.area*a.price-b.area*b.price:sort==='price-high'?b.area*b.price-a.area*a.price:sort==='area'?b.area-a.area:0);
  const select=useCallback((id:string)=>setSelected(id),[]);
  const chosen=filtered.find(l=>l.id===selected);
